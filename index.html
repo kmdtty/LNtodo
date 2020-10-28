@@ -1,8 +1,13 @@
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8"/>
 <script type="module">
 import "@polymer/paper-tabs/paper-tabs.js";
 import "@polymer/paper-tabs/paper-tab.js";
+import '@polymer/iron-ajax/iron-ajax.js';
+import "@polymer/iron-list/iron-list.js";
+
 </script>
 </head>
 <body>
@@ -22,6 +27,15 @@ import "@polymer/paper-tabs/paper-tab.js";
         box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
     }
 </style>
+<p>test iron-list</p>
+<iron-ajax url="data.json" last-response="{{data2}}" auto></iron-ajax>
+<iron-list items="[[data2]]" as="item">
+  <template>
+      <div>
+            Name: [[item.name]]
+      </div>
+  </template>
+</iron-list>
 <paper-tabs selected="0" scrollable>
   <paper-tab>Tab 0</paper-tab>
   <paper-tab>Tab 1</paper-tab>
