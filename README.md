@@ -7,6 +7,11 @@ http://todomvc.com/
 Demo
 ----
 
-$ polymer serve --npm
-open http://127.0.0.1:<port>/
+$ python3 -m http.server
+
+or
+
+$ python2 -m SimpleHTTPServer
+
+open http://localhost:8000/
 
