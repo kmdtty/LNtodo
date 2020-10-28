@@ -11,6 +11,22 @@
 (function (jIO) {
     var storage = jIO.createJIO({"type": "indexeddb", "database": "foo"});
     console.log(storage);
+    console.dir(storage.allDocs());
+    console.log('alldocs:' + storage.allDocs());
+    function foo(message) {
+        return storage.put("start", message)
+        .push(function (result) {
+            console.log('1st:' + result);
+            return storage.get("start");
+        })
+        .push(function (result) {
+            console.log('2nd:' + result);
+        }, function (error) {
+            console.warn(error);
+            throw error;
+        });
+    }
+    return foo("hello");
 }(jIO));
 </script>
 </body>
