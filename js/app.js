@@ -29,6 +29,7 @@
     }
     //octopus.init();
     rJS(window)
+    .setState({item_list: [], current_item: null})
     .declareService(function () {
       var model_gadget;
       return this.getDeclaredGadget("model")
@@ -37,6 +38,41 @@
           model_gadget = subgadget;
           return model_gadget.put("/", {title: "Test", completed: false });
          });
-    });
+    })
+    .onStateChange(function (modification_dict) {
+      if (modification_dict.hasOwnProperty("current_item")) {
+        this.addItem(modification_dict.current_item);
+        // what is this doing?? update the model?
+        return this.getDeclaredGadget("model")
+        .push(function (model_gadget) {
+          // why length is passed?
+          // => Since the index of item_list is unique, can be used as ID
+          return model_gadget.put(gadget.state.item_list.length.toString(), {
+            title: modification_dict.current_item,
+            completed: false
+          });
+        });
+      }
+    })
+    .declareMethod("addItem", function (item) {
+      var list_item = document.createElement("LI");
+      list_item.appendChild(document.createTextNode(item));
+      this.element.querySelector("ul").appendChild(list_item);
+    })
+    .onEvent("submit", function (event) {
+      // what is event? form? input?
+      // what is index 0 ?
+      var item = event.target.elements[0].value;
+      event.target.elements[0].value = "";
+      // no need to return this??
+      new RSVP.Queue()
+      .push(function () {
+        this.changeState({current_item: item});
+      });
+      // what is false, true here??
+      // => useCapture, and preventDefault
+      // the same with addEventListner()
+    }, false, true);
+
 }(window, document, rJS, jIO));
 
