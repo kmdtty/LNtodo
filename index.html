@@ -1,33 +1,44 @@
 <!doctype html>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="todo.css" rel="stylesheet">
+</head>
+<body>
+<div data-gadget-url="gadget_model.html" data-gadget-scope="model"
+     data-gadget-sandbox="public">
+</div>
+<section class="todoapp">
+<header class="header">
+<h1>TODO List</h1>
+<form>
+<input class="new-todo" placeholder="What need to be done?" autofocus>
+</form>
+</header>
+
+<section class="main">
+<input class="toggle-all" type="checkbox">
+<label for="toggle=all" class="toggle-label">Mark all as complete</label>
+<ul class="todo-list">
+<li>Planning</li>
+<li>Create the view</li>
+</ul>
+</section>
+
+<footer class="footer">
+<span class="todo-count"></span>
+<div class="filters">
+<a href="#/" class="selected">All</a>
+<a href="#/active">Active</a>
+<a href="#/completed">Completed</a>
+</div>
+<button class="clear-completed">Clear Completed</button>
+</footer>
+
 <script type="text/javascript" src="./js/rsvp-2.0.4.js"></script>
 <script type="text/javascript" src="./js/jio-latest.js"></script>
 <script type="text/javascript" src="./js/renderjs-latest.js"></script>
-</head>
-<body>
-<p>TODO List</p>
-<script type="text/javascript">
-(function (jIO) {
-    var storage = jIO.createJIO({"type": "indexeddb", "database": "foo"});
-    console.log(storage);
-    console.dir(storage.allDocs());
-    console.log('alldocs:' + storage.allDocs());
-    function foo(message) {
-        return storage.put("start", message)
-        .push(function (result) {
-            console.log('1st:' + result);
-            return storage.get("start");
-        })
-        .push(function (result) {
-            console.log('2nd:' + result);
-        }, function (error) {
-            console.warn(error);
-            throw error;
-        });
-    }
-    return foo("hello");
-}(jIO));
-</script>
+<script type="text/javascript" src="./js/app.js"></script>
 </body>
 </html>
