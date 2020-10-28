@@ -30,6 +30,13 @@
     //octopus.init();
     rJS(window)
     .declareService(function () {
+      var model_gadget;
+      return this.getDeclaredGadget("model")
+        .push(function (subgadget) {
+          console.log("model gadget as sub gadget");
+          model_gadget = subgadget;
+          return model_gadget.put("/", {title: "Test", completed: false });
+         });
     });
 }(window, document, rJS, jIO));
 
