@@ -1,4 +1,4 @@
-(function (window, document, rJS, jIO) {
+(function (window, rJS, jIO) {
   //octopus.init();
   rJS(window)
   .setState({item_list: [], current_item: null, current_tag: null})
@@ -40,8 +40,18 @@
   .onStateChange(function (modification_dict) {
     console.log("onStageChange is triggered");
     var gadget = this;
+    if (modification_dict.hasOwnProperty("current_tag")) {
+      this.element.querySelector("p").textContent = 
+      "You have just clicked on a " + this.state.current_tag + " tag.";
+    }
     if (modification_dict.hasOwnProperty("current_item")) {
+      this.element.querySelector("p").textContent =
+      "You just added the new item," + gadget.state.current_item
+      + ". You have added " + gadget.state.item_list.length + " items(s).";
       this.addItem(modification_dict.current_item);
+      this.element.querySelector("ul").innerHTML =
+        "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
+
       // what is this doing?? update the model?
       return this.getDeclaredGadget("model")
       .push(function (model_gadget) {
@@ -57,9 +67,6 @@
     }
   })
   .declareMethod("addItem", function (item) {
-    var list_item = document.createElement("LI");
-    list_item.appendChild(document.createTextNode(item));
-    this.element.querySelector("ul").appendChild(list_item);
     // Can we directory push item here??
     this.state.item_list.push(item);
   })
@@ -77,17 +84,11 @@
     var gadget = this;
     var item = event.target.elements[0].value;
     event.target.elements[0].value = "";
-    // no need to return this??
-    return new RSVP.Queue()
-    .push(function () {
-      console.log('chaning state');
-      // we do not need to push item_list here??
-      gadget.changeState({current_item: item});
-    });
+    return gadget.changeState({current_item: item});
     // what is false, true here??
     // => useCapture, and preventDefault
     // the same with addEventListner()
   }, false, true);
 
-}(window, document, rJS, jIO));
+}(window, rJS, jIO));
 
