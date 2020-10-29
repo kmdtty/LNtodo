@@ -1,7 +1,7 @@
 (function (window, document, rJS, jIO) {
   //octopus.init();
   rJS(window)
-  .setState({item_list: [], current_item: null})
+  .setState({item_list: [], current_item: null, current_tag: null})
   .declareService(function () {
     var model_gadget;
     var gadget = this;
@@ -63,6 +63,12 @@
     // Can we directory push item here??
     this.state.item_list.push(item);
   })
+  .onEvent("click", function (event) {
+    console.log('event.target:');
+    console.dir(event.target);
+    console.log(event.target.tagName);
+    return this.changeState({current_tag: event.target.tagName});
+  }, false, true)
   .onEvent("submit", function (event) {
     // what is event? form? input?
     // what is index 0 ?
