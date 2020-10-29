@@ -21,16 +21,16 @@
         // It seems almost useless here.
         result_list.data.rows.map(function (row) {
           // model_gadget.get returns a promise??
-          console.log('Test model_gadget.get');
-          console.dir(result_list);
-          console.log('row.id:' + row.id);
-          console.log(model_gadget.get(row.id));
+          //console.log(model_gadget.get(row.id));
           // This get() is jIO.get so returns a Promise
           promise_list.push(model_gadget.get(row.id));
         });
+        // without RSVP.all, we can not immediately get an array
         return RSVP.all(promise_list);
       })
       .push(function (result_list) {
+        console.log('result_list:')
+        console.dir(result_list)
         result_list.map(function (item) {
           console.log('item.title:' + item.title);
           gadget.addItem(item.title);
