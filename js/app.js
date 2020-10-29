@@ -17,6 +17,8 @@
       .push(function (result_list) {
         var promise_list = [];
         // result_list is a Promise Queue which has data property
+        // Why do we need to create promise_list here???
+        // It seems almost useless here.
         result_list.data.rows.map(function (row) {
           // model_gadget.get returns a promise??
           console.log('Test model_gadget.get');

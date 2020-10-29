@@ -6,12 +6,20 @@
   .declareService(function () {
     console.log("Hello, world");
   })
-  .declareService(function () {
+  .ready(function () {
     // when is this called??
     console.log("gadget_model.js changeState is called");
     // what this changeState() actually do?
-    return this.changeState(
-      {storage: jIO.createJIO({type: "indexeddb", database: "todo"})});
+    var gadget = this;
+    return new RSVP.Queue()
+      .push(function () {
+        // this just demonstrate delay and ready()
+        return RSVP.delay(1500);
+      })
+      .push(function () {
+        return gadget.changeState(
+          {storage: jIO.createJIO({type: "indexeddb", database: "todo"}) });
+       });
   })
   .declareMethod("put", function () {
     // changeStage modifies this.state which is a dictionary
