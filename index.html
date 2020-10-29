@@ -8,6 +8,7 @@
 <script src="./js/jio-latest.js"></script>
 <script src="./js/renderjs-latest.js"></script>
 <script src="./js/app.js"></script>
+<link href="base.css" rel="stylesheet">
 <link href="todo.css" rel="stylesheet">
 </head>
 <body>
@@ -15,31 +16,31 @@
      data-gadget-sandbox="public">
 </div>
 <section class="todoapp">
-<header class="header">
-<h1>TODO List</h1>
-<form>
-<input class="new-todo" placeholder="What need to be done?" autofocus>
-</form>
-</header>
+  <header class="header">
+    <h1>TODO List</h1>
+    <form>
+    <input class="new-todo" placeholder="What need to be done?" autofocus>
+    </form>
+  </header>
 
-<section class="main">
-<input class="toggle-all" type="checkbox">
-<label for="toggle=all" class="toggle-label">Mark all as complete</label>
-<ul class="todo-list">
-<li>Planning</li>
-<li>Create the view</li>
-</ul>
+  <section class="main">
+    <input class="toggle-all" type="checkbox">
+    <label for="toggle-all" class="toggle-label">Mark all as complete</label>
+    <ul class="todo-list"> </ul>
+  </section>
+
+  <footer class="footer">
+    <span class="todo-count"></span>
+    <div class="filters">
+    <a href="#/" class="selected">All</a>
+    <a href="#/active">Active</a>
+    <a href="#/completed">Completed</a>
+    </div>
+    <button class="clear-completed">Clear Completed</button>
+  </footer>
 </section>
-
-<footer class="footer">
-<span class="todo-count"></span>
-<div class="filters">
-<a href="#/" class="selected">All</a>
-<a href="#/active">Active</a>
-<a href="#/completed">Completed</a>
-</div>
-<button class="clear-completed">Clear Completed</button>
+<footer class="info">
+  <p>Double-click to edit a todo</p>
 </footer>
-
 </body>
 </html>
