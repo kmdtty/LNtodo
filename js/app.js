@@ -40,8 +40,10 @@
          });
     })
     .onStateChange(function (modification_dict) {
+      console.log("onStageChange is triggered");
       if (modification_dict.hasOwnProperty("current_item")) {
         this.addItem(modification_dict.current_item);
+        console.dir(modification_dict);
         // what is this doing?? update the model?
         return this.getDeclaredGadget("model")
         .push(function (model_gadget) {
@@ -62,12 +64,16 @@
     .onEvent("submit", function (event) {
       // what is event? form? input?
       // what is index 0 ?
+      console.log("submit event is triggered");
+      // this gadget variable is needed for changeState
+      var gadget = this;
       var item = event.target.elements[0].value;
       event.target.elements[0].value = "";
       // no need to return this??
-      new RSVP.Queue()
+      return new RSVP.Queue()
       .push(function () {
-        this.changeState({current_item: item});
+        console.log('chaning state');
+        gadget.changeState({current_item: item});
       });
       // what is false, true here??
       // => useCapture, and preventDefault
