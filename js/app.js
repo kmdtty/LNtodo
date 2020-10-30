@@ -3,57 +3,42 @@
   var handlebars_template = Handlebars.compile(
     document.head.querySelector(".handlebars-template").innerHTML
   );
-  //octopus.init();
   rJS(window)
-  .setState({item_list: [], update: false})
+  .setState({update: false})
   .declareService(function () {
-    var gadget = this;
-    return this.getDeclaredGadget("model")
-      .push(function (model_gadget) {
-        return model_gadget.getTodoList();
-      })
-      .push(function (result_list) {
-        gadget.state.item_list = result_list;
-        return gadget.changeState({update: true});
-      });
+    return this.changeState({update: true});
   })
   .onStateChange(function (modification_dict) {
     // what should we do in onStateChage???
     var gadget = this;
-    //this.element.querySelector("ul").innerHTML =
-    //  "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
     // We can not changeState({update: false}) here.
     // since it will loop infinitely
     return this.getDeclaredGadget("model")
-    .push(function (model_gadget) {
-      return model_gadget.getTodoList();
-    })
-    .push(function (todo_list) {
-      var plural = todo_list.length === 1 ? " item" : " items";
-      gadget.element.querySelector(".handlebars-anchor").innerHTML =
-        handlebars_template({
-          todo_list: todo_list,
-          todo_exists: todo_list.length > 0,
-          //todo_count: todo_list.length.toString() + plural,
-          all_completed: false
-        });
-      gadget.state.update = false;
-    });
+      .push(function (model_gadget) {
+        return model_gadget.getTodoList();
+      })
+      .push(function (todo_list) {
+        var plural = todo_list.length === 1 ? " item" : " items";
+        gadget.element.querySelector(".handlebars-anchor").innerHTML =
+          handlebars_template({
+            todo_list: todo_list,
+            todo_exists: todo_list.length > 0,
+            //todo_count: todo_list.length.toString() + plural,
+            all_completed: false
+          });
+        gadget.state.update = false;
+      });
   })
   .declareMethod("addItem", function (item) {
     var gadget = this;
-    // Can we directory push item here??
-    // Some properties are updated through changeState() and item_list are
-    // directory write into state ???
-    // If so, what for change state? just notify the modification to render??
-    gadget.state.item_list.push({title: item, completed: false});
+    var model_gadget = undefined;
     return gadget.getDeclaredGadget("model")
-      .push(function (model_gadget) {
-        // why length is passed?
-        // => Since the index of item_list is unique, can be used as ID
-        //return model_gadget.put(gadget.state.item_list.length.toString(),
-        // {title: item, completed: false});
-        return model_gadget.putTodo(gadget.state.item_list.length.toString(),
+      .push(function (sub_gadget) {
+        model_gadget = sub_gadget;
+        return model_gadget.getTodoList();
+      })
+      .push(function (todo_list) {
+        return model_gadget.putTodo(todo_list.length.toString(),
           {title: item, complete: false});
       })
       .push(function () {
