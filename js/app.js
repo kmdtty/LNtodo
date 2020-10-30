@@ -44,7 +44,7 @@
     //  "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
     // We can not changeState({update: false}) here.
     // since it will loop infinitely
-    var plural = this.state.item_list.length === 1 ? " item" : "items";
+    var plural = this.state.item_list.length === 1 ? " item" : " items";
     this.element.querySelector(".handlebars-anchor").innerHTML =
       handlebars_template({
         todo_list: this.state.item_list,

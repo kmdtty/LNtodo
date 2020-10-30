@@ -9,7 +9,7 @@
 <script class="handlebars-template" type="text/x-handlebars-template">
 <section class="todoapp">
   <header class="header">
-    <h1>TODO List</h1>
+    <h1>todos</h1>
     <form>
     <input class="new-todo" placeholder="What need to be done?" autofocus>
     </form>
@@ -17,17 +17,17 @@
 
   <section class="main {{#unless todo_exists}}hidden{{/unless}}">
     <input class="toggle-all" type="checkbox"
-     {{#if all_completed}} checked="true" {{/if}}>
+     {{#if all_completed}} checked="true"{{/if}}>
     <label for="toggle-all" class="toggle-label">Mark all as complete</label>
     <ul class="todo-list">
       {{#each todo_list}}
       <li class="todo-item" {{#if this.completed}}completed{{/if}}
-                            {{#if this.editing}}editing{{/if}}
+                            {{#if this.editing}}editing{{/if}}>
          <div class="view {{#if this.edit}}hidden{{/if}}">
            <input class="toggle" type="checkbox"
-                                 {{#if this.completed}}checked="true"{{/if}}">
+                                 {{#if this.completed}}checked="true"{{/if}}>
            <label class="todo-label">{{this.title}}</label>
-           <button class="destory"></button>
+           <button class="destroy"></button>
          </div>
          <input class="edit{{#unless this.editing}} hidden{{/unless}}">
       </li>
@@ -35,8 +35,8 @@
     </ul>
   </section>
 
-  <footer class="footer">
-    <span class="todo-count"></span>
+  <footer class="footer {{#unless todo_exists}}hidden{{/unless}}">
+    <span class="todo-count">{{todo_count}}</span>
     <div class="filters">
     <a href="#/" class="selected">All</a>
     <a href="#/active">Active</a>
