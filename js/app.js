@@ -1,7 +1,7 @@
 (function (window, rJS, jIO) {
   //octopus.init();
   rJS(window)
-  .setState({item_list: [], current_item: null, current_tag: null})
+  .setState({item_list: [], update: false})
   .declareService(function () {
     var model_gadget;
     var gadget = this;
@@ -33,58 +33,48 @@
         console.dir(result_list)
         result_list.map(function (item) {
           console.log('item.title:' + item.title);
-          gadget.addItem(item.title);
+          //gadget.addItem(item.title);
+          // directory put into state???
+          gadget.state.item_list.push(item.title);
         });
+        return gadget.changeState({update: true});
       });
   })
   .onStateChange(function (modification_dict) {
+    // what should we do in onStateChage???
     console.log("onStageChange is triggered");
     var gadget = this;
-    if (modification_dict.hasOwnProperty("current_tag")) {
-      this.element.querySelector("p").textContent = 
-      "You have just clicked on a " + this.state.current_tag + " tag.";
-    }
-    if (modification_dict.hasOwnProperty("current_item")) {
-      this.element.querySelector("p").textContent =
-      "You just added the new item," + gadget.state.current_item
-      + ". You have added " + gadget.state.item_list.length + " items(s).";
-      this.addItem(modification_dict.current_item);
-      this.element.querySelector("ul").innerHTML =
-        "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
-
-      // what is this doing?? update the model?
-      return this.getDeclaredGadget("model")
-      .push(function (model_gadget) {
-        console.log('updating model');
-        // why length is passed?
-        // => Since the index of item_list is unique, can be used as ID
-        console.log(gadget.state.item_list.length.toString());
-        return model_gadget.put(gadget.state.item_list.length.toString(), {
-          title: modification_dict.current_item,
-          completed: false
-        });
-      });
-    }
+    console.log('modification_dict:');
+    console.log(modification_dict);
+    this.element.querySelector("ul").innerHTML =
+      "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
+    // We can not changeState({update: false}) here.
+    // since it will loop infinitely
+    this.state.update = false;
   })
   .declareMethod("addItem", function (item) {
+    var gadget = this;
     // Can we directory push item here??
-    this.state.item_list.push(item);
+    // Some properties are updated through changeState() and item_list are
+    // directory write into state ???
+    gadget.state.item_list.push(item);
+    return gadget.getDeclaredGadget("model")
+      .push(function (model_gadget) {
+        // why length is passed?
+        // => Since the index of item_list is unique, can be used as ID
+        return model_gadget.put(gadget.state.item_list.length.toString(),
+          {title: item, completed: false});
+      })
+      .push(function () {
+        return gadget.changeState({update: true});
+      });
   })
-  .onEvent("click", function (event) {
-    console.log('event.target:');
-    console.dir(event.target);
-    console.log(event.target.tagName);
-    return this.changeState({current_tag: event.target.tagName});
-  }, false, true)
   .onEvent("submit", function (event) {
     // what is event? form? input?
     // what is index 0 ?
-    console.log("submit event is triggered");
-    // this gadget variable is needed for changeState
-    var gadget = this;
     var item = event.target.elements[0].value;
     event.target.elements[0].value = "";
-    return gadget.changeState({current_item: item});
+    return this.addItem(item);
     // what is false, true here??
     // => useCapture, and preventDefault
     // the same with addEventListner()
