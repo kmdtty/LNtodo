@@ -24,17 +24,21 @@
     //  "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
     // We can not changeState({update: false}) here.
     // since it will loop infinitely
-    var plural = this.state.item_list.length === 1 ? " item" : " items";
-    this.element.querySelector(".handlebars-anchor").innerHTML =
-      handlebars_template({
-        todo_list: this.state.item_list,
-        todo_exists: this.state.item_list.length > 0,
-        todo_count: this.state.item_list.length.toString() + plural,
-        all_completed: false
-      });
-    this.state.update = false;
-    //this.element.querySelector(".todo-count").textContent =
-    //  this.state.item_list.length + " items";
+    return this.getDeclaredGadget("model")
+    .push(function (model_gadget) {
+      return model_gadget.getTodoList();
+    })
+    .push(function (todo_list) {
+      var plural = todo_list.length === 1 ? " item" : " items";
+      gadget.element.querySelector(".handlebars-anchor").innerHTML =
+        handlebars_template({
+          todo_list: todo_list,
+          todo_exists: todo_list.length > 0,
+          //todo_count: todo_list.length.toString() + plural,
+          all_completed: false
+        });
+      gadget.state.update = false;
+    });
   })
   .declareMethod("addItem", function (item) {
     var gadget = this;
