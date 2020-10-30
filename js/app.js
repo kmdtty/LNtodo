@@ -1,4 +1,8 @@
-(function (window, rJS, jIO) {
+(function (window, document, rJS, jIO, Handlebars) {
+  "use strict"
+  var handlebars_template = Handlebars.compile(
+    document.head.querySelector(".handlebars-template").innerHTML
+  );
   //octopus.init();
   rJS(window)
   .setState({item_list: [], update: false})
@@ -28,7 +32,7 @@
         console.dir(result_list)
         result_list.map(function (item) {
           // directory put into state???
-          gadget.state.item_list.push(item.title);
+          gadget.state.item_list.push(item);
         });
         return gadget.changeState({update: true});
       });
@@ -36,14 +40,21 @@
   .onStateChange(function (modification_dict) {
     // what should we do in onStateChage???
     var gadget = this;
-    this.element.querySelector("ul").innerHTML =
-      "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
+    //this.element.querySelector("ul").innerHTML =
+    //  "<li>" + this.state.item_list.join("</li>\n<li>") + "</li>";
     // We can not changeState({update: false}) here.
     // since it will loop infinitely
-    this.state.update = false;
     var plural = this.state.item_list.length === 1 ? " item" : "items";
-    this.element.querySelector(".todo-count").textContent =
-      this.state.item_list.length + " items";
+    this.element.querySelector(".handlebars-anchor").innerHTML =
+      handlebars_template({
+        todo_list: this.state.item_list,
+        todo_exists: this.state.item_list.length > 0,
+        todo_count: this.state.item_list.length.toString() + plural,
+        all_completed: false
+      });
+    this.state.update = false;
+    //this.element.querySelector(".todo-count").textContent =
+    //  this.state.item_list.length + " items";
   })
   .declareMethod("addItem", function (item) {
     var gadget = this;
@@ -51,7 +62,7 @@
     // Some properties are updated through changeState() and item_list are
     // directory write into state ???
     // If so, what for change state? just notify the modification to render??
-    gadget.state.item_list.push(item);
+    gadget.state.item_list.push({title: item, completed: false});
     return gadget.getDeclaredGadget("model")
       .push(function (model_gadget) {
         // why length is passed?
@@ -76,5 +87,5 @@
     // the same with addEventListner()
   }, false, true);
 
-}(window, rJS, jIO));
+}(window, document, rJS, jIO, Handlebars));
 
