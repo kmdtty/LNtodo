@@ -7,18 +7,13 @@
   rJS(window)
   .setState({item_list: [], update: false})
   .declareService(function () {
-    var model_gadget;
     var gadget = this;
     return this.getDeclaredGadget("model")
-      .push(function (gadget) {
-        model_gadget = gadget;
+      .push(function (model_gadget) {
         return model_gadget.getTodoList();
       })
       .push(function (result_list) {
-        result_list.map(function (item) {
-          // directory put into state???
-          gadget.state.item_list.push(item);
-        });
+        gadget.state.item_list = result_list;
         return gadget.changeState({update: true});
       });
   })
@@ -52,8 +47,10 @@
       .push(function (model_gadget) {
         // why length is passed?
         // => Since the index of item_list is unique, can be used as ID
-        return model_gadget.put(gadget.state.item_list.length.toString(),
-          {title: item, completed: false});
+        //return model_gadget.put(gadget.state.item_list.length.toString(),
+        // {title: item, completed: false});
+        return model_gadget.putTodo(gadget.state.item_list.length.toString(),
+          {title: item, complete: false});
       })
       .push(function () {
         return gadget.changeState({update: true});
