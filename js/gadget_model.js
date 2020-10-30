@@ -37,5 +37,39 @@
   })
   .declareMethod("allDocs", function () {
     return this.state.storage.allDocs.apply(this.state.storage, arguments);
+  })
+  .declareMethod("getTodoList", function () {
+    var gadget = this;
+    return this.state.storage.allDocs()
+      .push(function (result_list) {
+        var promise_list = [];
+        result_list.data.rows.map(function (row) {
+          promise_list.push(gadget.state.storage.get(row.id));
+        });
+        // we need to use RSVP.all since jIO returns promise
+        // not a real array. Are there any good way if there is
+        // one promise? RSVP.resolve()? or just promise.push()?
+        // or always use RSVP.all()?
+        // => Use promise.push() or RSVP.all() in my understanding
+        return RSVP.all(promise_list);
+      });
+  })
+  .declareMethod("putTodo", function (id, todo) {
+    var gadget = this;
+    return this.state.storage.get(id)
+      .push(function (result) {
+        todo.map(function (key) {
+          if (todo.hasOwnProperty(key)) {
+            result[key] = todo[key];
+          }
+        });
+        return result;
+      }, function () {
+        // reject callback
+        return todo;
+      })
+      .push(function (todo) {
+        return gadget.state.storage.put(id, todo)
+      });
   });
 }(window, RSVP, rJS, jIO));

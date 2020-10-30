@@ -12,24 +12,9 @@
     return this.getDeclaredGadget("model")
       .push(function (gadget) {
         model_gadget = gadget;
-        return model_gadget.allDocs();
+        return model_gadget.getTodoList();
       })
       .push(function (result_list) {
-        var promise_list = [];
-        // result_list is a Promise Queue which has data property
-        // Why do we need to create promise_list here???
-        // It seems almost useless here.
-        result_list.data.rows.map(function (row) {
-          // model_gadget.get returns a promise??
-          // This get() is jIO.get so returns a Promise
-          promise_list.push(model_gadget.get(row.id));
-        });
-        // without RSVP.all, we can not immediately get an array
-        return RSVP.all(promise_list);
-      })
-      .push(function (result_list) {
-        console.log('result_list:')
-        console.dir(result_list)
         result_list.map(function (item) {
           // directory put into state???
           gadget.state.item_list.push(item);
