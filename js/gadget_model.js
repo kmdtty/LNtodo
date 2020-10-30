@@ -12,11 +12,13 @@
     // what this changeState() actually do?
     var gadget = this;
     return new RSVP.Queue()
-      .push(function () {
+      /*.push(function () {
         // this just demonstrate delay and ready()
         return RSVP.delay(1500);
-      })
+      })*/
       .push(function () {
+        // changeState() in this model is called only once.
+        // Is this because there is no view in this gadget?
         return gadget.changeState(
           {storage: jIO.createJIO({type: "indexeddb", database: "todo"}) });
        });

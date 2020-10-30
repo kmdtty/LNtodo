@@ -41,6 +41,9 @@
     // We can not changeState({update: false}) here.
     // since it will loop infinitely
     this.state.update = false;
+    var plural = this.state.item_list.length === 1 ? " item" : "items";
+    this.element.querySelector(".todo-count").textContent =
+      this.state.item_list.length + " items";
   })
   .declareMethod("addItem", function (item) {
     var gadget = this;
@@ -65,7 +68,9 @@
     // what is index 0 ?
     var item = event.target.elements[0].value;
     event.target.elements[0].value = "";
-    return this.addItem(item);
+    if (item) {
+      return this.addItem(item);
+    }
     // what is false, true here??
     // => useCapture, and preventDefault
     // the same with addEventListner()
