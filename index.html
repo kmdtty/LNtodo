@@ -1,9 +1,10 @@
 <html>
 <head>
-<script type="module">
-import "@polymer/paper-tabs/paper-tabs.js";
-import "@polymer/paper-tabs/paper-tab.js";
-</script>
+    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+
+    <!-- Your application must load the Roboto and Material Icons fonts. -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
 </head>
 <body>
 <style is="custom-style">
@@ -26,5 +27,10 @@ import "@polymer/paper-tabs/paper-tab.js";
   <paper-tab>Tab 0</paper-tab>
   <paper-tab>Tab 1</paper-tab>
 </paper-tabs>
+<script type="module">
+import "@polymer/paper-tabs/paper-tabs.js";
+import "@polymer/paper-tabs/paper-tab.js";
+import "@material/mwc-button";
+</script>
 </body>
 </html>

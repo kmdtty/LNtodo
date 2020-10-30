@@ -3,6 +3,7 @@
   "dependencies": {
     "@material/mwc-button": "^0.19.1",
     "@material/mwc-icon": "^0.19.1",
-    "@material/mwc-textfield": "^0.19.1"
+    "@material/mwc-textfield": "^0.19.1",
+    "@webcomponents/webcomponentsjs": "^2.5.0"
   }
 }
