@@ -1,36 +1,26 @@
 <html>
 <head>
-    <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
 
     <!-- Your application must load the Roboto and Material Icons fonts. -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+
 </head>
 <body>
-<style is="custom-style">
-    paper-tabs {
-        --paper-tabs-selection-bar-color: #b12d2b;
-    }
+<!-- Render textfield component -->
+<label class="mdc-text-field mdc-text-field--filled">
+<span class="mdc-text-field__ripple"></span>
+<span class="mdc-floating-label" id="my-label">Label</span>
+<input type="text" class="mdc-text-field__input" aria-labelledby="my-label">
+<span class="mdc-line-ripple"></span>
+</label>
 
-    paper-tab {
-        --paper-tab-ink: #b12d2b;
-    }
-
-    paper-tabs, core-toolbar {
-        color: rgb(53, 53, 53);
-        background-color: #f4f4f4;
-        font-family: 'Helvetica Neue', Helvetica, Arial;
-        box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-    }
-</style>
-<paper-tabs selected="0" scrollable>
-  <paper-tab>Tab 0</paper-tab>
-  <paper-tab>Tab 1</paper-tab>
-</paper-tabs>
-<script type="module">
-import "@polymer/paper-tabs/paper-tabs.js";
-import "@polymer/paper-tabs/paper-tab.js";
-import "@material/mwc-button";
+<!-- Required Material Web JavaScript library -->
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<!-- Instantiate single textfield component rendered in the document -->
+<script>
+  mdc.textField.MDCTextField.attachTo(document.querySelector('.mdc-text-field'));
 </script>
 </body>
 </html>
