@@ -54,9 +54,11 @@
   })
   .onEvent("submit", function (event) {
     // what is event? form? input?
+    // => Form
     // what is index 0 ?
+    // => input class=new-todo
     var item = event.target.elements[0].value;
-    event.target.elements[0].value = "";
+    //event.target.elements[0].value = "";
     if (item) {
       return this.addItem(item);
     }
