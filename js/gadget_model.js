@@ -112,5 +112,18 @@
   .declareMethod("removeOneTodo", function (id) {
     var gadget = this;
     return gadget.state.storage.remove(id);
+  })
+  .declareMethod("removeAllCompletedTodo", function () {
+    var gadget = this;
+    return gadget.getTodoList()
+      .push(function (todo_list) {
+        var promise_list = [];
+        todo_list.map(function (todo) {
+          if (todo.compelted) {
+            promise_list.push(gadget.removeOneTodo(todo.id));
+          }
+        });
+        return RSVP.all(promise_list);
+      })
   });
 }(window, RSVP, rJS, jIO));
