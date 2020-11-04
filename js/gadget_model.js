@@ -20,7 +20,13 @@
         // changeState() in this model is called only once.
         // Is this because there is no view in this gadget?
         return gadget.changeState(
-          {storage: jIO.createJIO({type: "indexeddb", database: "todo"}) });
+          {storage: jIO.createJIO({type: "uuid", 
+                                   sub_storage: {
+                                    type: "document",
+                                    document_id: "/",
+                                    sub_storage: {type: "local"} }
+                                  })
+          });
        });
   })
   .declareMethod("put", function () {
@@ -53,6 +59,13 @@
         // => Use promise.push() or RSVP.all() in my understanding
         return RSVP.all(promise_list);
       });
+  })
+  .declareMethod("postTodo", function (title) {
+    var gadget = this;
+    return gadget.state.storage.post({
+      title: title,
+      completed: false
+    });
   })
   .declareMethod("putTodo", function (id, todo) {
     var gadget = this;

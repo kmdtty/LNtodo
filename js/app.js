@@ -31,15 +31,9 @@
   })
   .declareMethod("addItem", function (item) {
     var gadget = this;
-    var model_gadget = undefined;
     return gadget.getDeclaredGadget("model")
-      .push(function (sub_gadget) {
-        model_gadget = sub_gadget;
-        return model_gadget.getTodoList();
-      })
-      .push(function (todo_list) {
-        return model_gadget.putTodo(todo_list.length.toString(),
-          {title: item, complete: false});
+      .push(function (model_gadget) {
+         return model_gadget.postTodo(item);
       })
       .push(function () {
         return gadget.changeState({update: true});
