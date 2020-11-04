@@ -119,7 +119,7 @@
       .push(function (todo_list) {
         var promise_list = [];
         todo_list.map(function (todo) {
-          if (todo.compelted) {
+          if (todo.completed) {
             promise_list.push(gadget.removeOneTodo(todo.id));
           }
         });
