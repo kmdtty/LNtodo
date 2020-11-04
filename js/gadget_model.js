@@ -50,7 +50,12 @@
       .push(function (result_list) {
         var promise_list = [];
         result_list.data.rows.map(function (row) {
-          promise_list.push(gadget.state.storage.get(row.id));
+          var promise = gadget.state.storage.get(row.id);
+          var promise_extended = promise.push(function (r) {
+            r['id'] = row.id;
+            return r;
+          });
+          promise_list.push(promise_extended);
         });
         // we need to use RSVP.all since jIO returns promise
         // not a real array. Are there any good way if there is
@@ -71,7 +76,7 @@
     var gadget = this;
     return this.state.storage.get(id)
       .push(function (result) {
-        todo.map(function (key) {
+        Object.keys(todo).map(function (key) {
           if (todo.hasOwnProperty(key)) {
             result[key] = todo[key];
           }
@@ -84,5 +89,28 @@
       .push(function (todo) {
         return gadget.state.storage.put(id, todo)
       });
+  })
+  .declareMethod("changeTodoTitle", function (id, title) {
+    var gadget = this;
+    return gadget.putTodo(id, {title: title});
+  })
+  .declareMethod("toggleOneTodoStatus", function (id, completed) {
+    var gadget = this;
+    return gadget.putTodo(id, {completed: completed});
+  })
+  .declareMethod("toggleAllTodoStatus", function (completed) {
+    var gadget = this;
+    return gadget.state.storage.allDocs()
+      .push(function (result_list) {
+        var promise_list = [];
+        result_list.data.rows.map(function (row) {
+          promise_list.push(gadget.toggleOneTodoStatus(row.id, completed));
+        })
+        return RSVP.all(promise_list);
+      });
+  })
+  .declareMethod("removeOneTodo", function (id) {
+    var gadget = this;
+    return gadget.state.storage.remove(id);
   });
 }(window, RSVP, rJS, jIO));

@@ -23,7 +23,8 @@
     <ul class="todo-list">
       {{#each todo_list}}
       <li class="todo-item" {{#if this.completed}}completed{{/if}}
-                            {{#if this.editing}}editing{{/if}}>
+                            {{#if this.editing}}editing{{/if}}
+                            data-jio-id="{{this.id}}">
          <div class="view {{#if this.edit}}hidden{{/if}}">
            <input class="toggle" type="checkbox"
                                  {{#if this.completed}}checked="true"{{/if}}>
