@@ -20,13 +20,24 @@
         return model_gadget.getTodoList();
       })
       .push(function (todo_list) {
-        var plural = todo_list.length === 1 ? " item" : " items";
+        var plural = todo_list.length === 1 ? " item" : " items",
+          all_completed = true;
+        todo_list.map(function (todo) {
+          if (!todo.completed) {
+            all_completed = false;
+          }
+          if (todo.id === gadget.state.editing_jio_id) {
+            todo.editing = true;
+          } else {
+            todo.editing = false;
+          }
+        });
         gadget.element.querySelector(".handlebars-anchor").innerHTML =
           handlebars_template({
             todo_list: todo_list,
             todo_exists: todo_list.length > 0,
             //todo_count: todo_list.length.toString() + plural,
-            all_completed: false
+            all_completed: all_completed
           });
         gadget.state.update = false;
       });
@@ -68,6 +79,7 @@
         case "toggle-all":
           return model_gadget.toggleAllTodoStatus(event.target.checked);
         case "toggle-label":
+          var checked = gadget.element.querySelector(".toggle-all").checked;
           return model_gadget.toggleAllTodoStatus(
             !gadget.element.querySelector(".toggle-all").checked
             );
@@ -106,7 +118,7 @@
         return gadget.changeState({update: true, editing_jio_id: ""});
       }
       item = event.target.value.trim();
-      if (event.keyCode === ESCAPE_KEY && item) {
+      if (event.keyCode === ENTER_KEY && item) {
         return gadget.getDeclaredGadget("model")
           .push(function (model_gadget) {
             return model_gadget.changeTodoTitle(
