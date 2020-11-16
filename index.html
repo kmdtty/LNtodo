@@ -16,6 +16,144 @@
 <span class="mdc-line-ripple"></span>
 </label>
 
+<div class="mdc-chip" role="row">
+  <div class="mdc-chip__ripple"></div>
+  <i class="material-icons mdc-chip__icon mdc-chip__icon--leading">event</i>
+  <span role="gridcell">
+    <span role="button" tabindex="0" class="mdc-chip__primary-action">
+      <span class="mdc-chip__text">Add to calendar</span>
+    </span>
+  </span>
+</div>
+
+<div class="mdc-chip" role="row">
+  <div class="mdc-chip__ripple"></div>
+  <span role="gridcell">
+    <span role="button" tabindex="0" class="mdc-chip__primary-action">
+      <span class="mdc-chip__text">Jane Smith</span>
+    </span>
+  </span>
+  <span role="gridcell">
+    <i class="material-icons mdc-chip__icon mdc-chip__icon--trailing" tabindex="-1" role="button">cancel</i>
+  </span>
+</div>
+
+<div class="mdc-chip-set mdc-chip-set--choice" role="grid">
+  <div class="mdc-chip mdc-chip--selected" role="row">
+    <div class="mdc-chip__ripple"></div>
+    <span role="gridcell">
+      <span role="radio" tabindex="0" aria-checked="true" class="mdc-chip__primary-action">
+        <span class="mdc-chip__text">Add to calendar</span>
+      </span>
+    </span>
+  </div>
+  <div class="mdc-chip" role="row">
+    <div class="mdc-chip__ripple"></div>
+    <span role="gridcell">
+      <span role="radio" tabindex="0" aria-checked="true" class="mdc-chip__primary-action">
+        <span class="mdc-chip__text">Add to calendar</span>
+      </span>
+    </span>
+  </div>
+</div>
+
+<div class="mdc-chip-set mdc-chip-set--filter" role="grid">
+  <div class="mdc-chip mdc-chip--selected" role="row">
+    <div class="mdc-chip__ripple"></div>
+    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading mdc-chip__icon--leading-hidden">face</i>
+    <span class="mdc-chip__checkmark">
+      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
+              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+      </svg>
+    </span>
+    <span role="gridcell">
+      <span role="checkbox" tabindex="0" aria-checked="true" class="mdc-chip__primary-action">
+        <span class="mdc-chip__text">Filterable content</span>
+      </span>
+    </span>
+  </div>
+  <div class="mdc-chip" role="row">
+    <div class="mdc-chip__ripple"></div>
+    <i class="material-icons mdc-chip__icon mdc-chip__icon--leading mdc-chip__icon--leading-hidden">face</i>
+    <span class="mdc-chip__checkmark">
+      <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
+        <path class="mdc-chip__checkmark-path" fill="none" stroke="black"
+              d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+      </svg>
+    </span>
+    <span role="gridcell">
+      <span role="checkbox" tabindex="0" aria-checked="true" class="mdc-chip__primary-action">
+        <span class="mdc-chip__text">Filterable content</span>
+      </span>
+    </span>
+  </div>
+</div>
+
+
+<ul class="mdc-list" role="group" aria-label="List with checkbox items">
+  <li class="mdc-list-item" role="checkbox" aria-checked="false">
+    <span class="mdc-list-item__ripple"></span>
+    <span class="mdc-list-item__graphic">
+      <div class="mdc-checkbox">
+        <input type="checkbox"
+                class="mdc-checkbox__native-control"
+                id="demo-list-checkbox-item-1"  />
+        <div class="mdc-checkbox__background">
+          <svg class="mdc-checkbox__checkmark"
+                viewBox="0 0 24 24">
+            <path class="mdc-checkbox__checkmark-path"
+                  fill="none"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+          </svg>
+          <div class="mdc-checkbox__mixedmark"></div>
+        </div>
+      </div>
+    </span>
+    <label class="mdc-list-item__text" for="demo-list-checkbox-item-1">Hifiman RE800 S (L)</label>
+  </li>
+  <li class="mdc-list-item" role="checkbox" aria-checked="true" tabindex="0">
+    <span class="mdc-list-item__ripple"></span>
+    <span class="mdc-list-item__graphic">
+        <div class="mdc-checkbox">
+            <input type="checkbox"
+                    class="mdc-checkbox__native-control"
+                    id="demo-list-checkbox-item-2"
+                    checked />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark"
+                    viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path"
+                      fill="none"
+                      d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+          </div>
+    </span>
+    <label class="mdc-list-item__text" for="demo-list-checkbox-item-2">Option 2</label>
+  </li>
+  <li class="mdc-list-item" role="checkbox" aria-checked="false">
+    <span class="mdc-list-item__ripple"></span>
+    <span class="mdc-list-item__graphic">
+        <div class="mdc-checkbox">
+            <input type="checkbox"
+                    class="mdc-checkbox__native-control"
+                    id="demo-list-checkbox-item-3" />
+            <div class="mdc-checkbox__background">
+              <svg class="mdc-checkbox__checkmark"
+                    viewBox="0 0 24 24">
+                <path class="mdc-checkbox__checkmark-path"
+                      fill="none"
+                      d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+              </svg>
+              <div class="mdc-checkbox__mixedmark"></div>
+            </div>
+          </div>
+    </span>
+    <label class="mdc-list-item__text" for="demo-list-checkbox-item-3">Option 3</label>
+  </li>
+</ul>
 <!-- Required Material Web JavaScript library -->
 <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 <!-- Instantiate single textfield component rendered in the document -->
